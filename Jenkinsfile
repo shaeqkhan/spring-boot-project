@@ -1,12 +1,15 @@
-#!/usr/bin/env groovy
-
 pipeline {
 	agent any
+	tools { 
+        maven 'maven3.5.4' 
+        jdk 'jdk8'
+    }
 	stages {
 		stage('Build'){
 			steps {
 				echo 'Building..'
-				echo 'Running ${env.BUILD_ID} on ${env.JENKINS_URL}'
+				sh 'mvn clean install'
+				sh 'mvn install dockerfile:build'
 			}
 		}
 		stage('Test') {
@@ -15,8 +18,11 @@ pipeline {
             }
         }
         stage('Deploy') {
+            agent { 
+            	dockerfile true 
+            }
             steps {
-                echo 'Deploying...'
+                sh 'docker run -p 8443:8080 -t shaeqkhan/app'
             }
         }
 	}
