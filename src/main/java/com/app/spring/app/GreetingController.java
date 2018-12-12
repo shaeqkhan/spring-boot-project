@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.spring.app.entity.User;
-import com.app.spring.app.service.CompanyService;
 
 @RestController
 public class GreetingController {
